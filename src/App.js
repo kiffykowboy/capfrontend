@@ -1,66 +1,37 @@
-import './App.css';
-import {useEffect, useState} from 'react';
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AppWithRouterAccess from './AppWithRouterAccess';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import { SecureRoute, Security, LoginCallback } from '@okta/okta-react';
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+import Home from './Home';
+import Posts from './Posts';
 
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.oktaAuth = new OktaAuth({
+      issuer: 'https://dev-37363092.okta.com',
+      clientId: '0oa2yqzxzgPLuPD4t5d7',
+      redirectUri: window.location.origin + '/login/callback'
+    });
+    this.restoreOriginalUri = async (_oktaAuth, originalUri) => {
+      props.history.replace(toRelativeUrl(originalUri || '/', window.location.origin));
+    };
+  }
 
-
-function App() {
- 
-
-  const [newbody, setnewbody] = useState({
-    new_title:"",
-    new_body:""
-
-  })
-  const [data, setData] = useState([])
-
-  useEffect(()=>{
-    fetch("https://capstone1-six.vercel.app/posts/myposts")
-    .then(response => response.json())
-    .then(data => setData(data))
-
-  })
-function handleChange(e) {
-  const {name, value} = e.target
-setnewbody({
-  ...newbody,
-  [name]:value
-})
-
+  render() {
+    return (
+      <Security oktaAuth={this.oktaAuth} restoreOriginalUri={this.restoreOriginalUri} >
+        <Route path='/' exact={true} component={Home} />
+        <SecureRoute path='/Posts' component={Posts} />
+        <Route path='/login/callback' component={LoginCallback} />
+      </Security>
+    );
+  }
 }
 
-function handleSubmit(e){
-    e.preventDefault()
-    console.log(newbody)
-    fetch("https://capstone1-six.vercel.app/posts/myposts", {
-      method:"POST",
-      headers:{"Content-Type": "application/json"},
-      body: JSON.stringify(newbody)
-
-    })
-}
-
- 
-  return (
-    <div className="App">
-      <form onSubmit={handleSubmit}> 
-        <input type="text" name="new_title" onChange={handleChange}/>
-        <input type="text" name="new_body" onChange={handleChange}/>
-        {console.log(data)}
-        <input type="submit"/>
-      </form>
-      {data.map((d)=>{
-        return(<div>
-        <div>{d.new_title}</div>
-        <div>{d.new_body}</div>
-
-        </div>
-        )
-      })}
-    </div>
-  );
-}
-
-export default App;
+const AppWithRouterAccess = withRouter(App);
+export default class extends Component {
+  render() {
+    return (<Router><AppWithRouterAccess/></Router>);
+  }
+} 

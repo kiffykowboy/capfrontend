@@ -1,28 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 import { useOktaAuth } from '@okta/okta-react';
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
-  const history = useNavigate();
   const { oktaAuth, authState } = useOktaAuth();
 
-  if (!authState) return null;
+  const login = async () => oktaAuth.signInWithRedirect();
+  const logout = async () => oktaAuth.signOut('/');
 
-  const login = async () => history.push('/login');
+  if(!authState) {
+    return <div>Loading...</div>;
+  }
 
-  const logout = async () => oktaAuth.signOut();
-
-  const button = authState.isAuthenticated ?
-    <button onClick={logout}>Logout</button> :
-    <button onClick={login}>Login</button>;
+  if(!authState.isAuthenticated) {
+    return (
+      <div>
+        <p>Not Logged in yet</p>
+        <button onClick={login}>Login</button>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <Link to='/'>Home</Link><br/>
-      <Link to='/protected'>Protected</Link><br/>
-      {button}
-    </div>
+       <Link to='/'>Home</Link><br/>
+    <Link to='/posts'>Posts</Link><br/>
+    <button onClick={logout}>Logout</button>
+  </div>
   );
 };
 export default Home;

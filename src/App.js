@@ -1,6 +1,8 @@
 import './App.css';
 import {useEffect, useState} from 'react';
 
+
+
 function App() {
   const [newbody, setnewbody] = useState({
     new_title:"",
@@ -35,6 +37,9 @@ function handleSubmit(e){
     })
 }
 
+
+
+ 
   return (
     <div className="App">
       <form onSubmit={handleSubmit}> 
@@ -47,6 +52,7 @@ function handleSubmit(e){
         return(<div>
         <div>{d.new_title}</div>
         <div>{d.new_body}</div>
+
         </div>
         )
       })}

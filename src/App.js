@@ -1,9 +1,14 @@
 import './App.css';
 import {useEffect, useState} from 'react';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppWithRouterAccess from './AppWithRouterAccess';
 
 
 
 function App() {
+ 
+
   const [newbody, setnewbody] = useState({
     new_title:"",
     new_body:""
@@ -36,8 +41,6 @@ function handleSubmit(e){
 
     })
 }
-
-
 
  
   return (

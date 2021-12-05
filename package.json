@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@okta/okta-auth-js": "^5.9.0",
-    "@okta/okta-react": "^6.3.0",
-    "@okta/okta-signin-widget": "^5.14.0",
+    "@okta/okta-auth-js": "5.1.1",
+    "@okta/okta-react": "6.0.0",
+    "@okta/okta-signin-widget": "5.7.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",

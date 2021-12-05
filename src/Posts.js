@@ -4,8 +4,9 @@ import {useEffect, useState} from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Posts() {
 
+function Posts() {
+ 
 
   const [newbody, setnewbody] = useState({
     new_title:"",
@@ -13,7 +14,7 @@ function Posts() {
 
   })
   const [data, setData] = useState([])
-
+  
   const { oktaAuth } = useOktaAuth();
   const logout = async () => oktaAuth.signOut('/');
 
@@ -43,10 +44,10 @@ function handleSubmit(e){
     })
 }
 
-
+ 
   return (
     <div className="Posts">
-       <Link to='/'>Home</Link><br/>
+        <Link to='/'>Home</Link><br/>
         <button onClick={logout}>Logout</button> :
       <form onSubmit={handleSubmit}> 
         <input type="text" name="new_title" onChange={handleChange}/>
@@ -67,3 +68,4 @@ function handleSubmit(e){
 }
 
 export default Posts;
+

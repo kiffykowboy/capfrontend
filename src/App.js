@@ -9,8 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.oktaAuth = new OktaAuth({
-      issuer: 'https://dev-37363092.okta.com',
-      clientId: '0oa2yqzxzgPLuPD4t5d7',
+      issuer: 'https://dev-1827916.okta.com/oauth2/default',
+      clientId: '0oa2ykfxtpMjQBkbk5d7',
       redirectUri: window.location.origin + '/login/callback'
     });
     this.restoreOriginalUri = async (_oktaAuth, originalUri) => {
@@ -30,8 +30,9 @@ class App extends Component {
 }
 
 const AppWithRouterAccess = withRouter(App);
+// eslint-disable-next-line
 export default class extends Component {
   render() {
     return (<Router><AppWithRouterAccess/></Router>);
   }
-} 
+}

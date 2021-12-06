@@ -35,7 +35,7 @@ setnewbody({
 
 function handleSubmit(e){
     e.preventDefault()
-    console.log(newbody)
+   
     fetch("https://capstone1-six.vercel.app/posts/myposts", {
       method:"POST",
       headers:{"Content-Type": "application/json"},
